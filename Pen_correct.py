@@ -1,16 +1,19 @@
 class Pen(object):
-    def __init__(self, **kwargs):
+    # меняем функцию чтобы проще было записать стандартные переменные
+    def __init__(self, ink_container_value=1000, size_letter=1.0, color='blue'):
         # the amount of ink
-        self.ink_container_value = int(kwargs.get('ink_container_value', 1000))
+        self.ink_container_value = int(ink_container_value)
         # size of the letter (font)
-        self.size_letter = float(kwargs.get('size_letter', 1.0))
+        self.size_letter = float(size_letter)
         # ink color
-        self.color = str(kwargs.get('color', 'blue'))
+        if isinstance(color, bool) or color == None:
+            self.color = 'blue'
+        else:
+            self.color = str(color)
 
     def write(self, word):
         if not self.check_pen_state():
-            # здесь можно вывести текст ошибки
-            return print("ink_container_value is empty or value with error")
+            return ''
         size_of_word = len(word) * self.size_letter
         if size_of_word <= self.ink_container_value:
             self.ink_container_value -= size_of_word
@@ -23,7 +26,7 @@ class Pen(object):
 
     def get_color(self):
         # при вызове функции по логике должен возвращаться цвет записанный в класс
-        print(self.color)
+        return self.color
 
     def check_pen_state(self):
         return self.ink_container_value > 0

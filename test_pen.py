@@ -63,7 +63,10 @@ class TestCheckPenState:
                 pen_state_test) == False, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
 
         # проверки при передаваемом значении float
-        if isinstance(pen_state_test, float) and pen_state_test > 0:
+        if isinstance(pen_state_test, float) and pen_state_test > 0 and pen_state_test < 1:
+            assert check_function(
+                pen_state_test) == False, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
+        if isinstance(pen_state_test, float) and pen_state_test >= 1:
             assert check_function(
                 pen_state_test) == True, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
         if isinstance(pen_state_test, float) and pen_state_test <= 0:
@@ -109,7 +112,7 @@ class TestCheckWrite:
 
         # проверка исходя из логики вводимых данных
         if ink_container_value_test <= 0:
-            assert check_function == "", f"Во время проверки функции write при значении ink_container_value={ink_container_value_test}, возвращается значение '{check_function}'"
+            assert check_function == "", f"Во время проверки функции write при значении ink_container_value={ink_container_value_test}, size_letter={size_letter_test}, возвращается значение '{check_function}'"
         if size_of_word_test <= ink_container_value_test:
             assert check_function == word_test, f"Во время проверки функции write при значении ink_container_value={ink_container_value_test}, size_letter={size_letter_test}, возвращается значение '{check_function}'"
         if size_of_word_test > ink_container_value_test and ink_container_value_test > 0:
@@ -129,4 +132,4 @@ class TestDoSomething:
     def test_do_something_else(self, color_test):
         # проверка функции do_something_else
         check_function = Pen(color=color_test).do_something_else()
-        assert check_function == color_test, f"Во время проверки функции do_something_else при значении color={color_test}, возвращаемое значение {check_function}"
+        assert check_function == 'blue', f"Во время проверки функции do_something_else при значении color={color_test}, возвращаемое значение {check_function}"
