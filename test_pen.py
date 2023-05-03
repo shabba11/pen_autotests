@@ -34,7 +34,6 @@ class TestCheckPenState:
     Проверки функции check_pen_state в классе Pen.
     """
 
-
     @pytest.mark.parametrize("pen_state_test", [
         1000,
         0,
@@ -50,14 +49,12 @@ class TestCheckPenState:
         function = Pen(ink_container_value=pen_state_test).check_pen_state()
 
         # проверяем значение функции при значении > или <= 0
-        if pen_state_test > 0 and pen_state_test < 1:
+        if pen_state_test < 1 and pen_state_test > 0:
             assert function is False, equal_error('True', function)
         elif pen_state_test >= 1:
             assert function is True, equal_error('True', function)
         elif pen_state_test <= 0:
             assert function is False, equal_error('False', function)
-
-
 
     @pytest.mark.parametrize("pen_state_test", [
         True,
@@ -78,11 +75,12 @@ class TestCheckPenState:
         function_test = class_pen_test.check_pen_state()
 
         # проверяем значение функции. При типе bool, None и str должен возвращаться True 
-        # (при условии что должно записываться стандартное значение ink_container_value = 1000 при попытке отправить эти типы)
+        # при условии что должно записываться стандартное значение ink_container_value = 1000 при этих типах
         try:
-            assert function_test == True and value_container_test == 1000, equal_error(True, function_test)
+            assert function_test is True and value_container_test == 1000, equal_error(True, function_test)
 
-        # пропускаем ошибки TypeError и ValueError если должна возвращаться ошибка по документации при попытке отправить типы bool, None и str
+        # пропускаем ошибки TypeError и ValueError если должна возвращаться ошибка (по документации)
+        # при попытке отправить типы bool, None и str
         except TypeError:
             pass
         except ValueError:
@@ -93,6 +91,7 @@ class TestCheckWrite:
     """
     Проверки функции write
     """
+
     @pytest.mark.parametrize("ink_container_value_test,size_letter_test,word_test",
                              [(0, 1.0, "Hello"),
                               (10, 1.0, "Hello"),
@@ -135,4 +134,6 @@ class TestDoSomething:
     def test_do_something_else(self, color_test):
         # проверка функции do_something_else
         check_function = Pen(color=color_test).do_something_else()
+
+        #документации по функции нет, поэтому сверяем с 'blue' c учетом того что перепутано.
         assert check_function == 'blue', equal_error('blue', check_function)
