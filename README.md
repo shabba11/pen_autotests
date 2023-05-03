@@ -20,3 +20,10 @@
 
 #### Возможно правильно написанный код находится [здесь](https://github.com/shabba11/pen_autotests/blob/main/Pen_correct.py "Я правильно написанный код")
 
+##### DONE:
+
+##### GITHUB:
+##### 1.Удалить .vscode, __pycache__ и venv
+##### 2.Исправить requirements.txt
+
+
