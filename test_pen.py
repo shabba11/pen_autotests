@@ -1,11 +1,12 @@
 import pytest
 from Pen import *
+from errors import *
 
 
 class TestGetColor:
-    '''
+    """
     Проверки функции get_color в классе Pen.
-    '''
+    """
 
     @pytest.mark.parametrize("color_test", [
         None,
@@ -19,20 +20,21 @@ class TestGetColor:
     def test_get_color(self, color_test):
         # проверка возвращения правильного значения get_color если нет никакой базы данных и принимаются любые значения
         if color_test is True or color_test is False or color_test is None:
-            assert Pen(color=color_test).get_color() == Pen(
-            ).color, f"Ошибка в функции get_color. При указании переменной '{color_test}' возвращается значение '{Pen(color=color_test).get_color()}'. Должно возвращаться значение '{Pen().color}'"
+            function_test = Pen(color=color_test).get_color()
+            assert function_test == Pen(
+            ).color, equal_error(Pen().color, function_test)
         else:
             what_color = Pen(color=color_test).get_color()
             assert isinstance(
-                what_color, str), f"Ошибка в функции get_color. Возвращается значение не равное классу 'str'. Возвращаемое значение {type(what_color)}"
+                what_color, str), equal_error(type(what_color), 'не равно классу str')
             assert what_color == str(
-                color_test), f"Ошибка в функции get_color. Возвращается значение {what_color} вместо {color_test} или ошибка в самой функции 'get_color'"
+                color_test), equal_error(color_test, what_color)
 
 
 class TestCheckPenState:
-    '''
+    """
     Проверка функции check_pen_state в классе Pen.
-    '''
+    """
 
     @pytest.mark.parametrize("pen_state_test", [
         1000,
@@ -50,36 +52,36 @@ class TestCheckPenState:
         # проверка возвращения правильного значения ink_container_value
 
         # возвращение ответа от функции check_pen_state
-        def check_function(value):
+        def check_function(value=1000):
             function = Pen(ink_container_value=value).check_pen_state()
             return function
 
-        # проверкb при передаваемом значении integer
+        # проверки при передаваемом значении integer
         if isinstance(pen_state_test, int) and pen_state_test > 0:
             assert check_function(
-                pen_state_test) is True, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
-        if isinstance(pen_state_test, int) and pen_state_test <= 0:
+                pen_state_test) is True, equal_error('True', check_function(pen_state_test))
+        elif isinstance(pen_state_test, int) and pen_state_test <= 0:
             assert check_function(
-                pen_state_test) is False, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
+                pen_state_test) is False, equal_error('False', check_function(pen_state_test))
 
         # проверки при передаваемом значении float
         if isinstance(pen_state_test, float) and pen_state_test > 0 and pen_state_test < 1:
             assert check_function(
-                pen_state_test) is False, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
-        if isinstance(pen_state_test, float) and pen_state_test >= 1:
+                pen_state_test) is False, equal_error('True', check_function(pen_state_test))
+        elif isinstance(pen_state_test, float) and pen_state_test >= 1:
             assert check_function(
-                pen_state_test) is True, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
-        if isinstance(pen_state_test, float) and pen_state_test <= 0:
+                pen_state_test) is True, equal_error('True', check_function(pen_state_test))
+        elif isinstance(pen_state_test, float) and pen_state_test <= 0:
             assert check_function(
-                pen_state_test) is False, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
+                pen_state_test) is False, equal_error('True', check_function(pen_state_test))
 
         # проверки при передаваемом значении bool
         if isinstance(pen_state_test, bool) or pen_state_test is None or isinstance(pen_state_test, str):
             try:
                 assert Pen(ink_container_value=pen_state_test) != Pen().ink_container_value(
-                ), f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
+                ), equal_error('True', check_function(pen_state_test))
                 assert check_function(
-                    pen_state_test) is True, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
+                    pen_state_test) is True, equal_error('True', check_function(pen_state_test))
             except TypeError:
                 pass
             except ValueError:
@@ -87,9 +89,9 @@ class TestCheckPenState:
 
 
 class TestCheckWrite:
-    '''
+    """
     Проверки функции write
-    '''
+    """
     @pytest.mark.parametrize("ink_container_value_test,size_letter_test,word_test",
                              [(0, 1.0, "Hello"),
                               (10, 1.0, "Hello"),
@@ -112,17 +114,17 @@ class TestCheckWrite:
 
         # проверка исходя из логики вводимых данных
         if ink_container_value_test <= 0:
-            assert check_function == "", f"Во время проверки функции write при значении ink_container_value={ink_container_value_test}, size_letter={size_letter_test}, возвращается значение '{check_function}'"
-        if size_of_word_test <= ink_container_value_test:
-            assert check_function == word_test, f"Во время проверки функции write при значении ink_container_value={ink_container_value_test}, size_letter={size_letter_test}, возвращается значение '{check_function}'"
-        if size_of_word_test > ink_container_value_test and ink_container_value_test > 0:
-            assert check_function == part_of_word_test, f"Во время проверки функции write при значении ink_container_value={ink_container_value_test}, size_letter={size_letter_test}, возвращается значение '{check_function}'"
+            assert check_function == "", equal_error("пустое значение - ''", check_function)
+        elif size_of_word_test <= ink_container_value_test:
+            assert check_function == word_test, equal_error(word_test, check_function)
+        elif size_of_word_test > ink_container_value_test > 0:
+            assert check_function == part_of_word_test, equal_error(part_of_word_test, check_function)
 
 
 class TestDoSomething:
-    '''
+    """
     Проверка работы функции do_something_else
-    '''
+    """
 
     @pytest.mark.parametrize("color_test",
                              ["white",
@@ -132,4 +134,4 @@ class TestDoSomething:
     def test_do_something_else(self, color_test):
         # проверка функции do_something_else
         check_function = Pen(color=color_test).do_something_else()
-        assert check_function == 'blue', f"Во время проверки функции do_something_else при значении color={color_test}, возвращаемое значение {check_function}"
+        assert check_function == 'blue', equal_error('blue', check_function)
