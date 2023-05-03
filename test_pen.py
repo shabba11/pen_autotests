@@ -21,14 +21,19 @@ class TestGetColor:
     def test_get_color(self, color_test):
         # проверка возвращения правильного значения get_color если нет никакой базы данных
         # принимаются значения равные любому типу "str"
+
+        # записываем значение функции get_color в переменную what_color
         what_color = Pen(color=color_test).get_color()
+
+        # проверяем значение функции с передаваемой переменной с типом str
         assert what_color == str(color_test), equal_error(str(color_test), what_color)
 
 
 class TestCheckPenState:
     """
-    Проверка функции check_pen_state в классе Pen.
+    Проверки функции check_pen_state в классе Pen.
     """
+
 
     @pytest.mark.parametrize("pen_state_test", [
         1000,
@@ -36,50 +41,52 @@ class TestCheckPenState:
         -1,
         1.2,
         0.6,
-        -0.3,
-        "number",
+        -0.3
+    ])
+    def test_check_pen_state_int(self, pen_state_test):
+        # проверки при передаваемом значении integer или float
+
+        # записываем значение функции check_pen_state в переменную function
+        function = Pen(ink_container_value=pen_state_test).check_pen_state()
+
+        # проверяем значение функции при значении > или <= 0
+        if pen_state_test > 0 and pen_state_test < 1:
+            assert function is False, equal_error('True', function)
+        elif pen_state_test >= 1:
+            assert function is True, equal_error('True', function)
+        elif pen_state_test <= 0:
+            assert function is False, equal_error('False', function)
+
+
+
+    @pytest.mark.parametrize("pen_state_test", [
         True,
         False,
         None,
+        "number"
     ])
-    def test_check_pen_state(self, pen_state_test):
-        # проверка возвращения правильного значения ink_container_value
+    def test_check_pen_state_bool(self, pen_state_test):
+        # проверки при передаваемом значении bool, None и str
 
-        # возвращение ответа от функции check_pen_state
-        def check_function(value=1000):
-            function = Pen(ink_container_value=value).check_pen_state()
-            return function
+        # записываем класс в переменную
+        class_pen_test = Pen(ink_container_value=pen_state_test)
 
-        # проверки при передаваемом значении integer
-        if isinstance(pen_state_test, int) and pen_state_test > 0:
-            assert check_function(
-                pen_state_test) is True, equal_error('True', check_function(pen_state_test))
-        elif isinstance(pen_state_test, int) and pen_state_test <= 0:
-            assert check_function(
-                pen_state_test) is False, equal_error('False', check_function(pen_state_test))
+        # записываем значение ink_container_value в переменную value_container_test
+        value_container_test = class_pen_test.ink_container_value
 
-        # проверки при передаваемом значении float
-        if isinstance(pen_state_test, float) and pen_state_test > 0 and pen_state_test < 1:
-            assert check_function(
-                pen_state_test) is False, equal_error('True', check_function(pen_state_test))
-        elif isinstance(pen_state_test, float) and pen_state_test >= 1:
-            assert check_function(
-                pen_state_test) is True, equal_error('True', check_function(pen_state_test))
-        elif isinstance(pen_state_test, float) and pen_state_test <= 0:
-            assert check_function(
-                pen_state_test) is False, equal_error('True', check_function(pen_state_test))
+        # записываем значение функции check_pen_state в переменную function_test
+        function_test = class_pen_test.check_pen_state()
 
-        # проверки при передаваемом значении bool
-        if isinstance(pen_state_test, bool) or pen_state_test is None or isinstance(pen_state_test, str):
-            try:
-                assert Pen(ink_container_value=pen_state_test) != Pen().ink_container_value(
-                ), equal_error('True', check_function(pen_state_test))
-                assert check_function(
-                    pen_state_test) is True, equal_error('True', check_function(pen_state_test))
-            except TypeError:
-                pass
-            except ValueError:
-                pass
+        # проверяем значение функции. При типе bool, None и str должен возвращаться True 
+        # (при условии что должно записываться стандартное значение ink_container_value = 1000 при попытке отправить эти типы)
+        try:
+            assert function_test == True and value_container_test == 1000, equal_error(True, function_test)
+
+        # пропускаем ошибки TypeError и ValueError если должна возвращаться ошибка по документации при попытке отправить типы bool, None и str
+        except TypeError:
+            pass
+        except ValueError:
+            pass
 
 
 class TestCheckWrite:

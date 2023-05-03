@@ -2,7 +2,12 @@ class Pen(object):
     # меняем функцию чтобы проще было записать стандартные переменные
     def __init__(self, ink_container_value=1000, size_letter=1.0, color='blue'):
         # the amount of ink
-        self.ink_container_value = int(ink_container_value)
+        if ink_container_value == True or ink_container_value == False or ink_container_value == None:   #проверяем булевые значения и None
+            self.ink_container_value = 1000
+        elif isinstance(ink_container_value, str):   #проверяем тип str
+            self.ink_container_value = 1000
+        else:
+            self.ink_container_value = int(ink_container_value)
         # size of the letter (font)
         self.size_letter = float(size_letter)
         # ink color
