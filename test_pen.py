@@ -18,7 +18,7 @@ class TestGetColor:
     ])
     def test_get_color(self, color_test):
         # проверка возвращения правильного значения get_color если нет никакой базы данных и принимаются любые значения
-        if color_test == True or color_test == False or color_test == None:
+        if color_test is True or color_test is False or color_test is None:
             assert Pen(color=color_test).get_color() == Pen(
             ).color, f"Ошибка в функции get_color. При указании переменной '{color_test}' возвращается значение '{Pen(color=color_test).get_color()}'. Должно возвращаться значение '{Pen().color}'"
         else:
@@ -57,29 +57,29 @@ class TestCheckPenState:
         # проверкb при передаваемом значении integer
         if isinstance(pen_state_test, int) and pen_state_test > 0:
             assert check_function(
-                pen_state_test) == True, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
+                pen_state_test) is True, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
         if isinstance(pen_state_test, int) and pen_state_test <= 0:
             assert check_function(
-                pen_state_test) == False, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
+                pen_state_test) is False, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
 
         # проверки при передаваемом значении float
         if isinstance(pen_state_test, float) and pen_state_test > 0 and pen_state_test < 1:
             assert check_function(
-                pen_state_test) == False, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
+                pen_state_test) is False, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
         if isinstance(pen_state_test, float) and pen_state_test >= 1:
             assert check_function(
-                pen_state_test) == True, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
+                pen_state_test) is True, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
         if isinstance(pen_state_test, float) and pen_state_test <= 0:
             assert check_function(
-                pen_state_test) == False, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
+                pen_state_test) is False, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
 
         # проверки при передаваемом значении bool
-        if isinstance(pen_state_test, bool) or pen_state_test == None or isinstance(pen_state_test, str):
+        if isinstance(pen_state_test, bool) or pen_state_test is None or isinstance(pen_state_test, str):
             try:
                 assert Pen(ink_container_value=pen_state_test) != Pen().ink_container_value(
                 ), f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
                 assert check_function(
-                    pen_state_test) == True, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
+                    pen_state_test) is True, f"При указании переменной ink_container_value={pen_state_test} возникает ошибка. Возвращаемое значение функции: '{check_function(pen_state_test)}'. Значение ink_container_value = {Pen(ink_container_value=pen_state_test).ink_container_value}"
             except TypeError:
                 pass
             except ValueError:
