@@ -9,26 +9,20 @@ class TestGetColor:
     """
 
     @pytest.mark.parametrize("color_test", [
-        None,
         "blue",
         "yellow",
+        "",
+        None,
         5,
         2.1,
         True,
         False
     ])
     def test_get_color(self, color_test):
-        # проверка возвращения правильного значения get_color если нет никакой базы данных и принимаются любые значения
-        if color_test is True or color_test is False or color_test is None:
-            function_test = Pen(color=color_test).get_color()
-            assert function_test == Pen(
-            ).color, equal_error(Pen().color, function_test)
-        else:
-            what_color = Pen(color=color_test).get_color()
-            assert isinstance(
-                what_color, str), equal_error(type(what_color), 'не равно классу str')
-            assert what_color == str(
-                color_test), equal_error(color_test, what_color)
+        # проверка возвращения правильного значения get_color если нет никакой базы данных
+        # принимаются значения равные любому типу "str"
+        what_color = Pen(color=color_test).get_color()
+        assert what_color == str(color_test), equal_error(str(color_test), what_color)
 
 
 class TestCheckPenState:

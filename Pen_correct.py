@@ -6,10 +6,7 @@ class Pen(object):
         # size of the letter (font)
         self.size_letter = float(size_letter)
         # ink color
-        if isinstance(color, bool) or color == None:
-            self.color = 'blue'
-        else:
-            self.color = str(color)
+        self.color = str(color)
 
     def write(self, word):
         if not self.check_pen_state():
