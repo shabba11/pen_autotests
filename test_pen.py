@@ -49,7 +49,7 @@ class TestCheckPenState:
         function = Pen(ink_container_value=pen_state_test).check_pen_state()
 
         # проверяем значение функции при значении > или <= 0
-        if pen_state_test < 1 and pen_state_test > 0:
+        if 1 > pen_state_test > 0:
             assert function is False, equal_error('True', function)
         elif pen_state_test >= 1:
             assert function is True, equal_error('True', function)
@@ -135,5 +135,5 @@ class TestDoSomething:
         # проверка функции do_something_else
         check_function = Pen(color=color_test).do_something_else()
 
-        #документации по функции нет, поэтому сверяем с 'blue' c учетом того что перепутано.
+        # документации по функции нет, поэтому сверяем с 'blue' c учетом того что перепутано.
         assert check_function == 'blue', equal_error('blue', check_function)
